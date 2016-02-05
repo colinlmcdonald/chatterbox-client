@@ -1,9 +1,7 @@
 // YOUR CODE HERE:
-//$( function() {
 
-  var app = {
+var app = {
   init: function() {
-
   },
 
   send: function() {
@@ -47,10 +45,28 @@
 
   clearMessages: function() {
     $('#chats').empty();
+  },
+
+  addMessage: function(message) {
+    $('#chats').append('<p>' + message.text + '</p>');
+  },  
+
+  addRoom: function(roomName) {
+    $('#roomSelect').append('<p>' + roomName + '</p>');
+  },
+
+  addFriend: function() {
+    console.log('hi');
   }
+
 };
 
-//});
+$( function() {
+    $('.username').click(function() {
+      //alert('hi');
+      app.addFriend();
+    });
+  });
 
 
 
