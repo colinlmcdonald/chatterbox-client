@@ -4,8 +4,11 @@ var app = {
   init: function() {
 
     $('.username').click(function() {
-      //alert('hi');
       app.addFriend();
+    });
+
+    $('.submit').click(function() {
+      app.handleSubmit();
     });
 
   },
@@ -71,7 +74,7 @@ var app = {
   },
 
   handleSubmit: function() {
-
+  
   }
 
 };
