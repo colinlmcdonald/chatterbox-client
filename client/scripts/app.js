@@ -53,12 +53,22 @@ var app = {
     $('#chats').empty();
   },
 
-  addMessage: function(message) {
-    var $test = $("<div><a href='#' class='username'>" +
-      message.username +
-      "</a></div>");
+  makeSafeText: function(string) {
+    return string.replace( /&/g, "&amp;")
+                 .replace( /</g, "&lt;")
+                 .replace( />/g, "&gt;")
+                 .replace( /'/g, "&#x27;")
+                 .replace( /"/g, "&quot;")
+                 .replace( "/", "&#x2F;");
+  },
 
-    $('#chats').append($test);
+  addMessage: function(message) {
+    console.log("safe username:", this.makeSafeText( message.username ) );
+    // var $test = $("<div><a href='#' class='username'>" +
+    //   makeSafeText( message.username ) +
+    //   "</a></div>");
+
+    // $('#chats').append($test);
   },  
 
   addRoom: function(roomName) {
@@ -76,9 +86,8 @@ var app = {
 };
 
 var handleMessages = function(messages) {
-  //console.log('chatterbox: Message received', data);
   messages.forEach( function(msg) {
-    console.log(msg);
+    app.addMessage(msg);
   });
 };
 
@@ -91,7 +100,8 @@ $.ajax({
   error: function (data) {
     console.error('chatterbox: Failed to receive message');
   }
-})
+});
+
 
 
 
