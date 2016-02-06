@@ -75,7 +75,23 @@ var app = {
 
 };
 
+var handleMessages = function(messages) {
+  //console.log('chatterbox: Message received', data);
+  messages.forEach( function(msg) {
+    console.log(msg);
+  });
+};
 
+$.ajax({
+  url: 'https://api.parse.com/1/classes/chatterbox',
+  type: 'GET',
+  success: function (data) {
+    handleMessages( data.results );
+  },
+  error: function (data) {
+    console.error('chatterbox: Failed to receive message');
+  }
+})
 
 
 
