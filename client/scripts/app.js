@@ -20,16 +20,18 @@ var app = {
     var message = {
       username: 'Evil Twins',
       text: 'Were on our way!',
-      roomname: 'TGAhell'
+      roomname: 'lobby'
     };
 
     $.ajax({
       url: 'https://api.parse.com/1/classes/chatterbox',
       type: 'POST',
       data: JSON.stringify(message),
+      //async: false,
       contentType: 'application/json',
       success: function (data) {
         console.log('chatterbox: Message sent', JSON.stringify(message));
+        console.log('this is the data', data);
       },
       error: function (data) {
         console.error('chatterbox: Failed to send message');
@@ -48,10 +50,11 @@ var app = {
   fetch: function() {
     var that = this;
     $.ajax({
+      //url: 'https://api.parse.com/1/classes/chatterbox/PK246i1QRv',
       url: 'https://api.parse.com/1/classes/chatterbox',
       type: 'GET',
       success: function (data) {
-        //console.log(data);
+        console.log(data);
         that.handleMessages( data.results );
         $('.username').click(function() {
           app.addFriend();
