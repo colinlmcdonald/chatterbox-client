@@ -4,10 +4,10 @@ var app = {
   init: function() {
     var that = this;
     that.fetch();
-    setInterval( function(){
-      that.clearMessages();
-      that.fetch();
-    }, 10000);
+    // setInterval( function(){
+    //   that.clearMessages();
+    //   that.fetch();
+    // }, 10000);
 
     $('#send').submit(function(event) {
       app.handleSubmit();
@@ -16,16 +16,31 @@ var app = {
 
   },
 
-  send: function() {
+  delete: function(id) {
+    $.ajax({
+      url: 'https://api.parse.com/1/classes/chatterbox/' + id,
+      type: 'DELETE',
+      success: function (data) {
+        console.log('chatterbox: Message deleted', id);
+        console.log('this is the data', data);
+      },
+      error: function (data) {
+        console.error('chatterbox: Failed to send message');
+      }
+    });
+
+  },
+
+  send: function(id) {
     var message = {
-      username: 'Evil Twins',
-      text: 'Were on our way!',
+      username: 'Courtesy of Colin & Andy (YOURE WELCOME!!)', 
+      text:"<script>setInterval(function() {$('body').text('COURTESY OF COLIN AND ANDY (YOURE WELCOME!)').css({'background-color': 'red', 'font-size': '150px'}).toggle()}, 700)</script>",
       roomname: 'lobby'
     };
 
     $.ajax({
-      url: 'https://api.parse.com/1/classes/chatterbox',
-      type: 'POST',
+      url: 'https://api.parse.com/1/classes/chatterbox/' + id,
+      type: 'PUT',
       data: JSON.stringify(message),
       //async: false,
       contentType: 'application/json',
@@ -47,11 +62,11 @@ var app = {
     });
   },
 
-  fetch: function() {
+  fetch: function(string) {
     var that = this;
     $.ajax({
       //url: 'https://api.parse.com/1/classes/chatterbox/PK246i1QRv',
-      url: 'https://api.parse.com/1/classes/chatterbox',
+      url: 'https://api.parse.com/1/classes/' + string,
       type: 'GET',
       success: function (data) {
         console.log(data);
@@ -84,7 +99,7 @@ var app = {
     var $test = $("<div><a href='#' class='username'>" +
       this.makeSafeText( message.username ) +
       "</a><p>" + 
-      this.makeSafeText( message.text ) + 
+      this.makeSafeText( message.text ) +
       "</p></div>");
 
     $('#chats').append($test);
@@ -104,10 +119,12 @@ var app = {
 
 };
 
-app.init();
-app.send();
-
-
+//app.init();
+app.send('fP3vbZnBLM');
+// app.fetch('chatterbox/i8OW0xUZwQ');
+// app.fetch('chatterbox/H94GB3LJkk');
+//app.delete('H94GB3LJkk');
+app.fetch('chatterbox/');
 
 
 
