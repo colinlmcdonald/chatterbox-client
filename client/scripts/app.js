@@ -7,8 +7,9 @@ var app = {
       app.addFriend();
     });
 
-    $('.submit').click(function() {
+    $('#send').submit(function(event) {
       app.handleSubmit();
+      event.preventDefault();
     });
 
   },
@@ -74,7 +75,7 @@ var app = {
   },
 
   handleSubmit: function() {
-  
+    alert('you rang?');
   }
 
 };
@@ -87,7 +88,9 @@ $( function() {
       //   text: 'I didn\'t get a harumph outa that guy.!',
       //   roomname: 'lobby'
       // });
+  $('#message').val('Why so many Mel Brooks quotes?');
 
+  app.init();
       
   });
 
