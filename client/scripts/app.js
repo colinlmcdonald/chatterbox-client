@@ -2,10 +2,12 @@
 
 var app = {
   init: function() {
-
-    $('.username').click(function() {
-      app.addFriend();
-    });
+    var that = this;
+    that.fetch();
+    setInterval( function(){
+      that.clearMessages();
+      that.fetch();
+    }, 10000);
 
     $('#send').submit(function(event) {
       app.handleSubmit();
@@ -51,6 +53,9 @@ var app = {
       success: function (data) {
         //console.log(data);
         that.handleMessages( data.results );
+        $('.username').click(function() {
+          app.addFriend();
+        });
       },
       error: function (data) {
         console.error('chatterbox: Failed to receive message');
@@ -72,12 +77,14 @@ var app = {
   },
 
   addMessage: function(message) {
-    console.log("safe username:", this.makeSafeText( message.username ) );
-    // var $test = $("<div><a href='#' class='username'>" +
-    //   makeSafeText( message.username ) +
-    //   "</a></div>");
+    //console.log("safe username:", this.makeSafeText( message.username ) );
+    var $test = $("<div><a href='#' class='username'>" +
+      this.makeSafeText( message.username ) +
+      "</a><p>" + 
+      this.makeSafeText( message.text ) + 
+      "</p></div>");
 
-    // $('#chats').append($test);
+    $('#chats').append($test);
   },  
 
   addRoom: function(roomName) {
@@ -94,8 +101,8 @@ var app = {
 
 };
 
+app.init();
 app.send();
-app.fetch();
 
 
 
