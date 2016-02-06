@@ -2,6 +2,12 @@
 
 var app = {
   init: function() {
+
+    $('.username').click(function() {
+      //alert('hi');
+      app.addFriend();
+    });
+
   },
 
   send: function() {
@@ -48,7 +54,12 @@ var app = {
   },
 
   addMessage: function(message) {
-    $('#chats').append('<p>' + message.text + '</p>');
+    var $test = $("<div><a href='#' class='username'>" +
+      message.username +
+      "</a></div>");
+    //$test.
+
+    $('#chats').append($test);
   },  
 
   addRoom: function(roomName) {
@@ -57,15 +68,24 @@ var app = {
 
   addFriend: function() {
     console.log('hi');
+  },
+
+  handleSubmit: function() {
+
   }
 
 };
 
+
 $( function() {
-    $('.username').click(function() {
-      //alert('hi');
-      app.addFriend();
-    });
+    
+      // app.addMessage({
+      //   username: 'Mel Brooks',
+      //   text: 'I didn\'t get a harumph outa that guy.!',
+      //   roomname: 'lobby'
+      // });
+
+      
   });
 
 
