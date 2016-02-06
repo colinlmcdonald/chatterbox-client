@@ -16,9 +16,9 @@ var app = {
 
   send: function() {
     var message = {
-      username: 'Mel Brooks',
-      text: 'It\'s good to be the king',
-      roomname: 'lobby'
+      username: 'Evil Twins',
+      text: 'Were on our way!',
+      roomname: 'TGAhell'
     };
 
     $.ajax({
@@ -27,7 +27,7 @@ var app = {
       data: JSON.stringify(message),
       contentType: 'application/json',
       success: function (data) {
-        console.log('chatterbox: Message sent');
+        console.log('chatterbox: Message sent', JSON.stringify(message));
       },
       error: function (data) {
         console.error('chatterbox: Failed to send message');
@@ -36,12 +36,21 @@ var app = {
 
   },
 
+  handleMessages: function(messages) {
+    var that = this;
+    messages.forEach( function(msg) {
+      that.addMessage(msg);
+    });
+  },
+
   fetch: function() {
+    var that = this;
     $.ajax({
-      url: undefined,
+      url: 'https://api.parse.com/1/classes/chatterbox',
       type: 'GET',
       success: function (data) {
-        console.log('chatterbox: Message received');
+        //console.log(data);
+        that.handleMessages( data.results );
       },
       error: function (data) {
         console.error('chatterbox: Failed to receive message');
@@ -85,22 +94,9 @@ var app = {
 
 };
 
-var handleMessages = function(messages) {
-  messages.forEach( function(msg) {
-    app.addMessage(msg);
-  });
-};
+app.send();
+app.fetch();
 
-$.ajax({
-  url: 'https://api.parse.com/1/classes/chatterbox',
-  type: 'GET',
-  success: function (data) {
-    handleMessages( data.results );
-  },
-  error: function (data) {
-    console.error('chatterbox: Failed to receive message');
-  }
-});
 
 
 
